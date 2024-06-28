@@ -92,7 +92,6 @@ func main() {
 	// 3. setial yang memiliki /users/:id harus melewati middleware 3
 
 	apiV1 := ge.Group("/api/v1")
-	apiV1.Use(middleware.Middleware1)
 	// /users [POST, GET]
 	userGroup := apiV1.Group("/users")
 	// action
@@ -106,10 +105,9 @@ func main() {
 
 	// harus menambahkan MIDDLEWARE VALIDATE JWT
 	// domain
-	userGroup.Use(middleware.Middleware2)
-	userGroup.Use(middleware.BearerAuthorization())
-	userGroup.GET("", userHandler.Get)     // midware1 midware2 get
 	userGroup.POST("", userHandler.Create) // midware1 midware2 create
+	userGroup.Use(middleware.BearerAuthorization())
+	userGroup.GET("", userHandler.Get) // midware1 midware2 get
 
 	// /users/:id [PUT, DELETE]
 	// PRODUCT:
@@ -130,7 +128,6 @@ func main() {
 		servicePort = "8080"
 	}
 
-	userGroup.Use(middleware.Middleware3)
 	userGroup.PUT("/:id", userHandler.Update) // midware1 midware2 midware3 update
 	if err := ge.Run(":" + servicePort); err != nil {
 		panic(err)
