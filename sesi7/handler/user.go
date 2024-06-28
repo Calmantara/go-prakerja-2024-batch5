@@ -12,7 +12,7 @@ import (
 )
 
 type UserHandler struct {
-	UserService *service.UserService
+	UserService service.UserServiceInterface
 }
 
 func (u *UserHandler) Get(ctx *gin.Context) {

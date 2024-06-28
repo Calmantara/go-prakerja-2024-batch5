@@ -118,3 +118,11 @@ func main() {
 		panic(err)
 	}
 }
+
+func Add(a, b int) int {
+	// kita sudah ada test cases
+	// sekarang bagaimana caranya
+	// kita coding sehingga
+	// semua test cases SUCCESS
+	return a + b
+}
