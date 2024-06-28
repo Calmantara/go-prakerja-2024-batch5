@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/Calmantara/go-prakerja-2024-batch5/sesi7/handler"
 	"github.com/Calmantara/go-prakerja-2024-batch5/sesi7/middleware"
@@ -55,7 +57,18 @@ func main() {
 
 	// connect to gorm database
 	// https://gorm.io/docs/connecting_to_the_database.html
-	dsn := "host=localhost user=postgres password=mysecretpassword dbname=postgres port=35432 sslmode=disable TimeZone=Asia/Jakarta"
+	pgHost := os.Getenv("PG_HOST")
+	pgUser := os.Getenv("PG_USER")
+	pgPassword := os.Getenv("PG_PASSWORD")
+	pgDB := os.Getenv("PG_DB")
+	pgPort := os.Getenv("PG_PORT")
+
+	dsn := fmt.Sprintf("host=%v user=%v password=%v dbname=%v port=%v sslmode=disable TimeZone=Asia/Jakarta",
+		pgHost,
+		pgUser,
+		pgPassword,
+		pgDB,
+		pgPort)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
