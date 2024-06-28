@@ -125,9 +125,14 @@ func main() {
 	// 3. get id from param
 	// 4. compare id from param and user id
 
+	servicePort := os.Getenv("PORT")
+	if servicePort == "" {
+		servicePort = "8080"
+	}
+
 	userGroup.Use(middleware.Middleware3)
 	userGroup.PUT("/:id", userHandler.Update) // midware1 midware2 midware3 update
-	if err := ge.Run(":8080"); err != nil {
+	if err := ge.Run(":" + servicePort); err != nil {
 		panic(err)
 	}
 }
